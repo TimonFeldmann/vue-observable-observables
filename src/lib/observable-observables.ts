@@ -4,7 +4,7 @@
 
 import Popup from "@/views/Popup.vue";
 import CopyStyles from "@/lib/copy-styles.ts";
-import observedObservablesType from "@/types/observedObservables.ts";
+import observedObservablesType from "types/observedObservables";
 import { v4 as guid } from "uuid";
 import { VueConstructor } from "vue/types/umd";
 

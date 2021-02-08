@@ -1,62 +1,89 @@
 {
-  "name": "vue-observable-observable",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vue-observable-observables",
+  "author": {
+	"name": "Timon Feldmann",
+	"email": "timonfeldmann@gmail.com"
+},
+  "description": "A Vue development tool allowing developers to inspect and modify all Vue.observables living in their application.",
+  "homepage": "https://github.com/TimonFeldmann/vue-observable-observables",
+  "keywords": [
+	"Vue",
+	"Vue 2",
+	"Vue.Observable",
+	"Development",
+	"Tool"
+  ],
+  "version": "0.0.4",
+  "private": false,
+  "main": "./dist/vue-observable-observables.common.js",
+  "types": "./types/vue-observable-observables.d.ts",
+  "files": [
+	"dist/*",
+	"types/vue-observable-observables.d.ts"
+  ],
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+	"serve": "vue-cli-service serve",
+	"build": "vue-cli-service build --target lib --name vue-observable-observables ./src/lib/observable-observables.ts",
+	"lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@types/uuid": "^8.3.0",
-    "uuid": "^8.3.2",
-    "vue": "^2.6.11"
+	"@types/uuid": "^8.3.0",
+	"uuid": "^8.3.2",
+	"vue": "^2.6.11"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
-    "@typescript-eslint/parser": "^2.33.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^5.0.2",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-vue": "^6.2.2",
-    "prettier": "^1.19.1",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
-    "typescript": "~3.9.3",
-    "vue-svg-loader": "^0.16.0",
-    "vue-template-compiler": "^2.6.12"
+	"@typescript-eslint/eslint-plugin": "^2.33.0",
+	"@typescript-eslint/parser": "^2.33.0",
+	"@vue/cli-plugin-eslint": "~4.5.0",
+	"@vue/cli-plugin-typescript": "~4.5.0",
+	"@vue/cli-service": "~4.5.0",
+	"@vue/eslint-config-prettier": "^6.0.0",
+	"@vue/eslint-config-typescript": "^5.0.2",
+	"eslint": "^6.7.2",
+	"eslint-plugin-prettier": "^3.1.3",
+	"eslint-plugin-vue": "^6.2.2",
+	"prettier": "^1.19.1",
+	"sass": "^1.26.5",
+	"sass-loader": "^8.0.2",
+	"typescript": "~3.9.3",
+	"vue-svg-loader": "^0.16.0",
+	"vue-template-compiler": "^2.6.12"
   },
   "prettier": {
-    "useTabs": true,
-    "tabWidth": 4
+	"useTabs": true,
+	"tabWidth": 4
   },
   "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/typescript/recommended",
-      "@vue/prettier",
-      "@vue/prettier/@typescript-eslint"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2020
-    },
-    "rules": {
-      "no-debugger": 0,
-      "@typescript-eslint/ban-ts-ignore": 0
-    }
+	"root": true,
+	"env": {
+	  "node": true
+	},
+	"extends": [
+	  "plugin:vue/essential",
+	  "eslint:recommended",
+	  "@vue/typescript/recommended",
+	  "@vue/prettier",
+	  "@vue/prettier/@typescript-eslint"
+	],
+	"parserOptions": {
+	  "ecmaVersion": 2020
+	},
+	"rules": {
+	  "no-debugger": 0,
+	  "@typescript-eslint/ban-ts-ignore": 0
+	}
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+	"> 1%",
+	"last 2 versions",
+	"not dead"
+  ],
+  "repository": {
+	"type": "git",
+	"url": "git+https://github.com/TimonFeldmann/vue-observable-observables.git"
+  },
+  "license": "ISC",
+  "bugs": {
+	"url": "https://github.com/TimonFeldmann/vue-observable-observables/issues"
+  }
 }
