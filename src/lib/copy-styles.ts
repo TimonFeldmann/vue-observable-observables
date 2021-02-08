@@ -18,7 +18,7 @@ export default function copyStyles(sourceDoc: Document, targetDoc: Document) {
 				targetDoc.head.appendChild(newStyleEl);
 			}
 		} catch (e) {
-			e
+			e;
 		}
 	});
 }
