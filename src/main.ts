@@ -1,7 +1,7 @@
 import Vue from "vue";
 import ObservableObservables from "@/lib/observable-observables";
 
-Vue.use(ObservableObservables, true);
+ObservableObservables.install(Vue, true);
 
 const sampleObject1 = {
 	someProperty1: 5,
@@ -11,6 +11,7 @@ const sampleObject1 = {
 const sampleObject2 = {
 	someProperty3: 15,
 	someProperty4: 20,
+	someNullProperty1: null,
 	object1: {
 		innerProperty1: 50,
 		innerArray1: [
@@ -37,8 +38,6 @@ const sampleObject2 = {
 	someProperty5: 25,
 	someProperty6: 30
 };
-
-console.log(sampleObject2);
 
 const sampleObject3 = {
 	someProperty5: 25,

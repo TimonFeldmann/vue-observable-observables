@@ -40,15 +40,22 @@
 					{{ getObjectDescriptorText(propertyName) }}
 				</div>
 				<input
-					v-if="propertyIsInputType(propertyName) === true"
-					@input="inputFilter(propertyName, $event)"
+					v-show="propertyIsInputType(propertyName) === true"
+					@focus="focusInput(propertyName, $event)"
 					:value="selectedObservable[propertyName]"
+					class="observable-node-property-details-container__view-input"
+				/>
+				<input
+					v-show="propertyIsInputType(propertyName) === true"
+					@blur="inputFilter(propertyName, $event)"
+					v-model="cachedInputValue"
+					class="observable-node-property-details-container__edit-input"
 				/>
 			</div>
 			<inner-observable-node
 				:parentName="propertyName"
 				:selectedObservable="selectedObservable[propertyName]"
-				:depth="depth + 15"
+				:depth="depth + 1"
 				v-if="
 					getTypeOfProperty(propertyName) === 'object' &&
 						childNodeIsExpanded(propertyName) === true
@@ -71,21 +78,58 @@ export default Vue.extend({
 	},
 	data() {
 		return {
-			expandedChildNodes: [] as string[]
+			expandedChildNodes: [] as string[],
+			cachedInputValue: null as string | number | null
 		};
 	},
 	methods: {
 		inputFilter(propertyName: string, event: InputEvent) {
 			if (event.currentTarget) {
+				const editInput = event.currentTarget as HTMLInputElement;
+
+				if (editInput.previousSibling) {
+					const viewInput = editInput.previousSibling as HTMLInputElement;
+
+					viewInput.style.display = "block";
+					editInput.style.display = "none";
+				}
+
+				let evalValue = editInput.value;
 				// Allows setting property values to arrays / objects.
-				const evalValue = eval(
-					`(${(event.currentTarget as HTMLInputElement).value})`
-				);
+				try {
+					evalValue = eval(`(${evalValue})`);
+				} catch {
+					evalValue = eval(`('${evalValue}')`);
+				}
 
 				this.$set(this.selectedObservable, propertyName, evalValue);
+				this.cachedInputValue = null;
 			}
 		},
+		focusInput(propertyName: string, focusEvent: FocusEvent) {
+			console.log(focusEvent);
+			if (focusEvent.currentTarget !== null) {
+				const viewInput = focusEvent.currentTarget as HTMLInputElement;
+
+				if (viewInput.nextElementSibling !== null) {
+					const editInput = viewInput.nextElementSibling as HTMLInputElement;
+
+					this.cachedInputValue = viewInput.value;
+
+					viewInput.style.display = "none";
+					editInput.style.display = "block";
+
+					editInput.focus();
+				}
+			}
+
+			debugger;
+		},
 		getTypeOfProperty(propertyName: string): string {
+			if (this.selectedObservable[propertyName] === null) {
+				return "null";
+			}
+
 			return typeof this.selectedObservable[propertyName];
 		},
 		propertyIsObject(propertyName: string): boolean {
@@ -133,7 +177,7 @@ export default Vue.extend({
 	mounted() {
 		if (this.depth > 0) {
 			(this.$refs
-				.root as HTMLElement).style.transform = `translateX(${this.depth}px)`;
+				.root as HTMLElement).style.transform = `translateX(15px)`;
 		}
 	},
 	props: {
@@ -177,7 +221,7 @@ export default Vue.extend({
 	.observable-node-property-container,
 	.observable-node-property-container--column {
 		display: flex;
-		margin: 0.5rem 0 0.5rem 0;
+		margin: 0.5rem 0 0 0;
 
 		.observable-node-property-details-container {
 			display: flex;
@@ -186,6 +230,10 @@ export default Vue.extend({
 			svg {
 				position: absolute;
 				height: 1rem;
+			}
+
+			&__edit-input {
+				display: none;
 			}
 
 			&__caret-down {
@@ -209,7 +257,6 @@ export default Vue.extend({
 
 		&--column {
 			flex-direction: column;
-			margin: 0;
 		}
 	}
 }

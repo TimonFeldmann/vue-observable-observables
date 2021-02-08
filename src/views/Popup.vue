@@ -124,14 +124,13 @@ export default Vue.extend({
 	flex-direction: column;
 
 	::v-deep input {
-		background-color: #141d25;
+		background-color: transparent;
 		border-color: #172029;
-		border-width: 1px;
 		border-style: solid;
+		border-width: 0 0 1px 0;
 		outline: none;
 		color: white;
-		width: 7rem;
-		border-radius: 0.15rem;
+		width: 9rem;
 	}
 
 	hr {
