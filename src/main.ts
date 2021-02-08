@@ -1,7 +1,7 @@
 import Vue from "vue";
 import ObservableObservables from "@/lib/observable-observables";
 
-Vue.use(ObservableObservables);
+Vue.use(ObservableObservables, true);
 
 const sampleObject1 = {
 	someProperty1: 5,
@@ -13,6 +13,18 @@ const sampleObject2 = {
 	someProperty4: 20,
 	object1: {
 		innerProperty1: 50,
+		innerArray1: [
+			1,
+			2,
+			3,
+			"4s",
+			"5s",
+			"6s",
+			{
+				a: 1,
+				b: 2
+			}
+		],
 		innerProperty2: 100,
 		innerObject1: {
 			innerInnerProperty1: 200,
@@ -48,14 +60,27 @@ const sampleObject3 = {
 	someProperty21: 25,
 	someProperty22: 30,
 	someProperty23: 25,
-	someProperty24: 30,
+	someProperty24: 30
 };
-
+////
 const sampleObservable1 = Vue.observable(sampleObject1, "sampleObject1");
 const sampleObservable2 = Vue.observable(sampleObject2, "sampleObject2");
 const sampleObservable3 = Vue.observable(sampleObject3);
 
 setInterval(() => sampleObservable1.someProperty1++, 100);
-setInterval(() => sampleObservable2.object1.innerObject1.innerInnerProperty1++, 100);
+setInterval(
+	() => sampleObservable2.object1.innerObject1.innerInnerProperty1++,
+	100
+);
+setInterval(
+	() =>
+		Vue.set(
+			sampleObservable2.object1.innerArray1,
+			2,
+			// @ts-ignore
+			sampleObject2.object1.innerArray1[2] + 1
+		),
+	100
+);
 
 Vue.config.productionTip = false;

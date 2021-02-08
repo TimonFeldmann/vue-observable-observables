@@ -11,50 +11,49 @@
 		>
 			<div class="observable-node-property-details-container">
 				<caret-right-svg
-					@click="toggleChildNodeCollapse"
+					@click="toggleChildNodeCollapse(propertyName)"
 					class="observable-node-property-details-container__caret-right"
 					v-if="
 						propertyIsObject(propertyName) &&
-							childNodeCollapsed === true
+							childNodeIsExpanded(propertyName) === true
 					"
 				></caret-right-svg>
 				<caret-down-svg
-					@click="toggleChildNodeCollapse"
+					@click="toggleChildNodeCollapse(propertyName)"
 					class="observable-node-property-details-container__caret-down"
 					v-if="
 						propertyIsObject(propertyName) &&
-							childNodeCollapsed === false
+							childNodeIsExpanded(propertyName) === false
 					"
 				></caret-down-svg>
 				<div
-					@click="toggleChildNodeCollapse"
+					@click="toggleChildNodeCollapse(propertyName)"
 					class="observable-node-property-details-container__name"
 				>
 					{{ propertyName }}:
 				</div>
 				<div
-					@click="toggleChildNodeCollapse"
+					@click="toggleChildNodeCollapse(propertyName)"
 					v-if="propertyIsObject(propertyName) === true"
 					class="observable-node-property-details-container__descriptor"
 				>
-					Object
+					{{ getObjectDescriptorText(propertyName) }}
 				</div>
 				<input
 					v-if="propertyIsInputType(propertyName) === true"
-					v-model="selectedObservable[propertyName]"
+					@input="inputFilter(propertyName, $event)"
+					:value="selectedObservable[propertyName]"
 				/>
 			</div>
-			<transition name="slide">
-				<inner-observable-node
-					:parentName="propertyName"
-					:selectedObservable="selectedObservable[propertyName]"
-					:depth="depth + 15"
-					v-if="
-						getTypeOfProperty(propertyName) === 'object' &&
-							childNodeCollapsed === false
-					"
-				></inner-observable-node>
-			</transition>
+			<inner-observable-node
+				:parentName="propertyName"
+				:selectedObservable="selectedObservable[propertyName]"
+				:depth="depth + 15"
+				v-if="
+					getTypeOfProperty(propertyName) === 'object' &&
+						childNodeIsExpanded(propertyName) === true
+				"
+			></inner-observable-node>
 		</div>
 	</div>
 </template>
@@ -72,14 +71,21 @@ export default Vue.extend({
 	},
 	data() {
 		return {
-			childNodeCollapsed: true
+			expandedChildNodes: [] as string[]
 		};
 	},
 	methods: {
-		getTypeOfProperty(propertyName: string): string {
-			// console.log("property: ", propertyName);
-			// console.log("type: ", typeof this.selectedObservable[propertyName]);
+		inputFilter(propertyName: string, event: InputEvent) {
+			if (event.currentTarget) {
+				// Allows setting property values to arrays / objects.
+				const evalValue = eval(
+					`(${(event.currentTarget as HTMLInputElement).value})`
+				);
 
+				this.$set(this.selectedObservable, propertyName, evalValue);
+			}
+		},
+		getTypeOfProperty(propertyName: string): string {
 			return typeof this.selectedObservable[propertyName];
 		},
 		propertyIsObject(propertyName: string): boolean {
@@ -100,8 +106,28 @@ export default Vue.extend({
 					return "";
 			}
 		},
-		toggleChildNodeCollapse() {
-			this.childNodeCollapsed = !this.childNodeCollapsed;
+		childNodeIsExpanded(propertyName: string): boolean {
+			return this.expandedChildNodes.includes(propertyName);
+		},
+		toggleChildNodeCollapse(propertyName: string) {
+			const childNodeIndex = this.expandedChildNodes.findIndex(
+				x => x === propertyName
+			);
+
+			if (childNodeIndex !== -1) {
+				this.expandedChildNodes.splice(childNodeIndex);
+			} else {
+				this.expandedChildNodes.push(propertyName);
+			}
+		},
+		getObjectDescriptorText(propertyName: string): string {
+			const property = this.selectedObservable[propertyName];
+
+			if (Array.isArray(property)) {
+				return `Array(${property.length})`;
+			} else {
+				return "Object";
+			}
 		}
 	},
 	mounted() {
@@ -113,11 +139,11 @@ export default Vue.extend({
 	props: {
 		selectedObservable: {
 			required: true,
-			type: Object
+			type: [Object, Array]
 		},
 		parentName: {
 			required: true,
-			type: String
+			type: [String, Number]
 		},
 		depth: {
 			required: true,
@@ -127,9 +153,26 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped lang="scss">
-@use 'src/styles/slide-animation.scss';
+<style lang="scss">
+.slide-enter-active,
+.slide-leave-active {
+	transition: max-height 0.5s ease-in-out;
+}
 
+.slide-enter-to,
+.slide-leave {
+	overflow: hidden;
+	max-height: 1000px;
+}
+
+.slide-enter,
+.slide-leave-to {
+	overflow: hidden;
+	max-height: 0;
+}
+</style>
+
+<style scoped lang="scss">
 .observable-node-container {
 	.observable-node-property-container,
 	.observable-node-property-container--column {

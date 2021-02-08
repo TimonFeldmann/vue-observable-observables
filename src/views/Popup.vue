@@ -58,7 +58,6 @@ import { observedObservables } from "@/lib/observable-observables.ts";
 import circleSvg from "@/assets/svg/circle-solid.svg";
 
 export default Vue.extend({
-	name: "hello",
 	components: {
 		observableNode,
 		circleSvg
