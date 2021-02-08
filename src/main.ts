@@ -1,7 +1,8 @@
 import Vue from "vue";
+
 import ObservableObservables from "@/lib/observable-observables";
 
-ObservableObservables.install(Vue, true);
+ObservableObservables.install(true);
 
 const sampleObject1 = {
 	someProperty1: 5,

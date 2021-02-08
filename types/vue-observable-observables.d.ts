@@ -7,5 +7,5 @@ declare module "vue/types/vue" {
 }
 
 export default {
-	install: (Vue: VueConstructor, isDev: boolean) => {}
+	install: (isDev: boolean)
 };
