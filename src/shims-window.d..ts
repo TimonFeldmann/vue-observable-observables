@@ -1,4 +1,4 @@
 interface Window {
-	observeMyObservables: () => void;
+	observeObservables: () => void;
 	vueObservablePopup: Window | null;
 }

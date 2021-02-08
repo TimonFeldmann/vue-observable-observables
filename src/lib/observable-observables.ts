@@ -1,6 +1,7 @@
-import Vue, { VueConstructor } from "vue";
-import App from "@/App.vue";
+import Vue from "vue";
+import Popup from "@/views/Popup.vue";
 import CopyStyles from "@/lib/copy-styles.ts";
+import { v4 as guid } from "uuid";
 
 type observedObservables = {
 	[key: string]: {
@@ -20,10 +21,15 @@ export default {
 
 		const baseObservable = Vue.observable;
 
-		Vue.observable = (<T>(obj: T, observableName: string): T => {
+		Vue.observable = (<T>(
+			obj: T,
+			observableName: string | null = null
+		): T => {
 			const observedObject = baseObservable(obj);
+			const keyName =
+				observableName === null ? `Unnamed-${guid()}` : observableName;
 
-			observedObservables[observableName] = obj;
+			observedObservables[keyName] = obj;
 
 			return observedObject;
 		}) as <T>(obj: T) => T; // Need to cast as original type declaration as the above type does not conform to the parameter
@@ -42,7 +48,7 @@ export default {
 					typedPhrase === "observe" &&
 					window.vueObservablePopup === null
 				) {
-					window.observeMyObservables();
+					window.observeObservables();
 				}
 
 				timeoutHandler = setTimeout(() => {
@@ -51,7 +57,7 @@ export default {
 			}
 		});
 
-		window.observeMyObservables = () => {
+		window.observeObservables = () => {
 			const popupWidth = parseInt(
 				localStorage.getItem("observableToolWidth") || "600"
 			);
@@ -108,7 +114,7 @@ export default {
 									clearInterval(popupInitializedInterval);
 
 									new Vue({
-										render: h => h(App)
+										render: h => h(Popup)
 									}).$mount(app);
 								}
 							}
@@ -148,7 +154,7 @@ export default {
 		if (popupWasOpen === true) {
 			// Popup was open before a hot-reload occurred.
 			// Reopen the popup so the developer does not have to reopen it themselves
-			window.observeMyObservables();
+			window.observeObservables();
 		}
 	}
 };
