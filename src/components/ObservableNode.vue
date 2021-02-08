@@ -10,10 +10,30 @@
 			v-for="(propertyValue, propertyName) in selectedObservable"
 		>
 			<div class="observable-node-property-details-container">
-				<div class="observable-node-property-details-container__name">
+				<caret-right-svg
+					@click="toggleChildNodeCollapse"
+					class="observable-node-property-details-container__caret-right"
+					v-if="
+						propertyIsObject(propertyName) &&
+							childNodeCollapsed === true
+					"
+				></caret-right-svg>
+				<caret-down-svg
+					@click="toggleChildNodeCollapse"
+					class="observable-node-property-details-container__caret-down"
+					v-if="
+						propertyIsObject(propertyName) &&
+							childNodeCollapsed === false
+					"
+				></caret-down-svg>
+				<div
+					@click="toggleChildNodeCollapse"
+					class="observable-node-property-details-container__name"
+				>
 					{{ propertyName }}:
 				</div>
 				<div
+					@click="toggleChildNodeCollapse"
 					v-if="propertyIsObject(propertyName) === true"
 					class="observable-node-property-details-container__descriptor"
 				>
@@ -24,25 +44,41 @@
 					v-model="selectedObservable[propertyName]"
 				/>
 			</div>
-			<inner-observable-node
-				:parentName="propertyName"
-				:selectedObservable="selectedObservable[propertyName]"
-				:depth="depth + 15"
-				v-if="getTypeOfProperty(propertyName) === 'object'"
-			></inner-observable-node>
+			<transition name="slide">
+				<inner-observable-node
+					:parentName="propertyName"
+					:selectedObservable="selectedObservable[propertyName]"
+					:depth="depth + 15"
+					v-if="
+						getTypeOfProperty(propertyName) === 'object' &&
+							childNodeCollapsed === false
+					"
+				></inner-observable-node>
+			</transition>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import caretRightSvg from "@/assets/svg/caret-right-solid.svg";
+import caretDownSvg from "@/assets/svg/caret-down-solid.svg";
 
 export default Vue.extend({
 	name: "inner-observable-node",
+	components: {
+		caretRightSvg,
+		caretDownSvg
+	},
+	data() {
+		return {
+			childNodeCollapsed: true
+		};
+	},
 	methods: {
 		getTypeOfProperty(propertyName: string): string {
-			console.log("property: ", propertyName);
-			console.log("type: ", typeof this.selectedObservable[propertyName]);
+			// console.log("property: ", propertyName);
+			// console.log("type: ", typeof this.selectedObservable[propertyName]);
 
 			return typeof this.selectedObservable[propertyName];
 		},
@@ -52,7 +88,7 @@ export default Vue.extend({
 		propertyIsInputType(propertyName: string): boolean {
 			const propertyType = this.getTypeOfProperty(propertyName);
 
-			return propertyType !== 'object' && propertyType !== 'array';
+			return propertyType !== "object" && propertyType !== "array";
 		},
 		getPropertyContainerClassModifier(propertyName: string) {
 			const propertyType = this.getTypeOfProperty(propertyName);
@@ -63,6 +99,9 @@ export default Vue.extend({
 				default:
 					return "";
 			}
+		},
+		toggleChildNodeCollapse() {
+			this.childNodeCollapsed = !this.childNodeCollapsed;
 		}
 	},
 	mounted() {
@@ -89,6 +128,8 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
+@use 'src/styles/slide-animation.scss';
+
 .observable-node-container {
 	.observable-node-property-container,
 	.observable-node-property-container--column {
@@ -97,6 +138,22 @@ export default Vue.extend({
 
 		.observable-node-property-details-container {
 			display: flex;
+			position: relative;
+
+			svg {
+				position: absolute;
+				height: 1rem;
+			}
+
+			&__caret-down {
+				top: 2px;
+				left: -0.8rem;
+			}
+
+			&__caret-right {
+				left: -0.5rem;
+				top: 2px;
+			}
 
 			&__name {
 				margin-right: 0.5rem;

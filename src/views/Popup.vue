@@ -41,6 +41,7 @@
 			</div>
 			<div class="popup-body-right-container">
 				<observableNode
+					v-if="selectedObservableName !== null"
 					:parentName="selectedObservableName"
 					:selectedObservable="selectedObservable"
 					:depth="0"
@@ -54,7 +55,7 @@
 import Vue from "vue";
 import observableNode from "@/components/ObservableNode.vue";
 import { observedObservables } from "@/lib/observable-observables.ts";
-import circleSvg from "@/assets/svg/circle.svg";
+import circleSvg from "@/assets/svg/circle-solid.svg";
 
 export default Vue.extend({
 	name: "hello",
@@ -130,7 +131,7 @@ export default Vue.extend({
 		border-style: solid;
 		outline: none;
 		color: white;
-		width: 10rem;
+		width: 7rem;
 		border-radius: 0.15rem;
 	}
 
@@ -209,7 +210,7 @@ export default Vue.extend({
 
 		.popup-body-right-container {
 			flex: 4;
-			padding-left: 0.5rem;
+			padding-left: 1rem;
 			overflow: scroll;
 		}
 
