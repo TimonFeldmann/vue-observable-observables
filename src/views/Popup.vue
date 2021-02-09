@@ -160,9 +160,7 @@ export default Vue.extend({
 		border-top-style: solid;
 		border-top-width: 1px;
 		height: 100%;
-
-		flex: 1;
-		flex-basis: 100%;
+		overflow-y: hidden;
 
 		.popup-body-left-container {
 			flex: 1;
@@ -209,7 +207,7 @@ export default Vue.extend({
 		.popup-body-right-container {
 			flex: 4;
 			padding-left: 1rem;
-			overflow: scroll;
+			overflow-y: scroll;
 		}
 
 		.popup-body-left-container::-webkit-scrollbar,
