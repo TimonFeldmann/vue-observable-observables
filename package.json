@@ -15,7 +15,7 @@
 	"Tool",
 	"DevTool"
   ],
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "main": "./dist/vue-observable-observables.common.js",
   "types": "./types/vue-observable-observables.d.ts",
