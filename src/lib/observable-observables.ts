@@ -162,7 +162,9 @@ export default {
 	install: (isDev: boolean) => {
 		if (isDev === false) {
 			window.observeObservables = () => {
-				console.log("disabled");
+				alert(
+					"Observing observables is only possible in development mode."
+				);
 			};
 		}
 	}

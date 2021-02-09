@@ -52,17 +52,15 @@
 					class="observable-node-property-details-container__edit-input"
 				/>
 			</div>
-			<transition name="slide">
-				<inner-observable-node
-					:parentName="propertyName"
-					:selectedObservable="selectedObservable[propertyName]"
-					:depth="depth + 1"
-					v-if="
-						getTypeOfProperty(propertyName) === 'object' &&
-							childNodeIsExpanded(propertyName) === true
-					"
-				></inner-observable-node>
-			</transition>
+			<inner-observable-node
+				:parentName="propertyName"
+				:selectedObservable="selectedObservable[propertyName]"
+				:depth="depth + 1"
+				v-if="
+					getTypeOfProperty(propertyName) === 'object' &&
+						childNodeIsExpanded(propertyName) === true
+				"
+			></inner-observable-node>
 		</div>
 	</div>
 </template>
@@ -109,7 +107,6 @@ export default Vue.extend({
 			}
 		},
 		focusInput(propertyName: string, focusEvent: FocusEvent) {
-			console.log(focusEvent);
 			if (focusEvent.currentTarget !== null) {
 				const viewInput = focusEvent.currentTarget as HTMLInputElement;
 
@@ -124,8 +121,6 @@ export default Vue.extend({
 					editInput.focus();
 				}
 			}
-
-			debugger;
 		},
 		getTypeOfProperty(propertyName: string): string {
 			if (this.selectedObservable[propertyName] === null) {
@@ -198,10 +193,7 @@ export default Vue.extend({
 	}
 });
 </script>
-
 <style scoped lang="scss">
-@use "src/styles/slide-animation.scss";
-
 .observable-node-container {
 	.observable-node-property-container,
 	.observable-node-property-container--column {

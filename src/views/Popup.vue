@@ -91,7 +91,6 @@ export default Vue.extend({
 			const body = window.vueObservablePopup.document.querySelector(
 				"body"
 			);
-
 			if (body !== null) {
 				// Must set styles of the body in script as we won't want to interfere with the stylings of the main window's body.
 				body.style.margin = "0px 0px 0px 0px";
