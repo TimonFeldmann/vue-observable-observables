@@ -52,15 +52,17 @@
 					class="observable-node-property-details-container__edit-input"
 				/>
 			</div>
-			<inner-observable-node
-				:parentName="propertyName"
-				:selectedObservable="selectedObservable[propertyName]"
-				:depth="depth + 1"
-				v-if="
-					getTypeOfProperty(propertyName) === 'object' &&
-						childNodeIsExpanded(propertyName) === true
-				"
-			></inner-observable-node>
+			<transition name="slide">
+				<inner-observable-node
+					:parentName="propertyName"
+					:selectedObservable="selectedObservable[propertyName]"
+					:depth="depth + 1"
+					v-if="
+						getTypeOfProperty(propertyName) === 'object' &&
+							childNodeIsExpanded(propertyName) === true
+					"
+				></inner-observable-node>
+			</transition>
 		</div>
 	</div>
 </template>
@@ -197,26 +199,9 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss">
-.slide-enter-active,
-.slide-leave-active {
-	transition: max-height 0.5s ease-in-out;
-}
-
-.slide-enter-to,
-.slide-leave {
-	overflow: hidden;
-	max-height: 1000px;
-}
-
-.slide-enter,
-.slide-leave-to {
-	overflow: hidden;
-	max-height: 0;
-}
-</style>
-
 <style scoped lang="scss">
+@use "src/styles/slide-animation.scss";
+
 .observable-node-container {
 	.observable-node-property-container,
 	.observable-node-property-container--column {
