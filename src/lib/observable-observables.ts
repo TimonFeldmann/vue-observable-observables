@@ -161,11 +161,7 @@ if (initialized === false) {
 export default {
 	install: (isDev: boolean) => {
 		if (isDev === false) {
-			window.observeObservables = () => {
-				alert(
-					"Observing observables is only possible in development mode."
-				);
-			};
+			window.observeObservables = () => {};
 		}
 	}
 };
