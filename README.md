@@ -10,7 +10,7 @@ No browser extension is required for this development tool.
 
 # Sample
 
-<img src="https://raw.githubusercontent.com/TimonFeldmann/vue-observable-observables/master/readme-assets/Sample.gif" width="1056" height="594"/>
+<img src="https://raw.githubusercontent.com/TimonFeldmann/vue-observable-observables/master/readme-assets/Sample.gif" width="100%" height="50%"/>
 
 
 # Install
