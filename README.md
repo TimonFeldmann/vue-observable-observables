@@ -18,10 +18,12 @@ No browser extension is required for this development tool.
 1. `npm install vue-observable-observables`
 2. Place the following code at the very top of your application's entry file:
 
-`import VueObservableObservable from 'vue-observable-observables';
+```javascript
+import VueObservableObservable from 'vue-observable-observables';
 import 'vue-observable-observables/dist/vue-observable-observables.css';
 
-VueObservableObservable.install(true);`
+VueObservableObservable.install(true);
+```
 
 VueObservableObservable.install takes a single parameter: DevMode. If DevMode is set to true, the dev tool will be useable.
 
@@ -47,11 +49,7 @@ TypeScript typings are provided for this parameter modification to Vue.observabl
   On top of just doing it for fun, my place of work also does not allow developers to install their own extensions so this was a neat workaround :)
 
 - How does this tool work?
-  - This tool works by overriding Vue.observable and caching a reference of all objects passed to it. When the tool is invoked, the main document creates a new window, grabs a handle of the popup window's document object, and begins mounting DOM elements to it and copying styles from the main document to the popup document.
-
-  The cached references to the Observable objects are then imported into the popup and rendered into a Vue component where they are recursively v-modeled to editable input elements.
-
-  Finally, a state of the popup is kept in localStorage so when a hot-reload happens, we can ensure the popup will not close or take you away from your observable.
+  - This tool works by overriding Vue.observable and caching a reference of all objects passed to it. When the tool is invoked, the main document creates a new window, grabs a handle of the popup window's document object, and begins mounting DOM elements to it and copying styles from the main document to the popup document.<br><br>The cached references to the Observable objects are then imported into the popup and rendered into a Vue component where they are recursively v-modeled to editable input elements.<br><br>Finally, a state of the popup is kept in localStorage so when a hot-reload happens, we can ensure the popup will not close or take you away from your observable.
 
 - Are you supposed to use popups like this? Isn't overwriting methods from other libraries a bad practice?
   - No and Yes. I made this development tool because I needed the tool myself for work and I thought it would be fun to make it without requiring a browser extension.
