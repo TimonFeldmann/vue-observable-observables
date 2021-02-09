@@ -10,10 +10,12 @@
 	"Vue",
 	"Vue 2",
 	"Vue.Observable",
+	"Observable",
 	"Development",
-	"Tool"
+	"Tool",
+	"DevTool"
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "main": "./dist/vue-observable-observables.common.js",
   "types": "./types/vue-observable-observables.d.ts",

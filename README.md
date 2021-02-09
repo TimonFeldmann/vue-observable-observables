@@ -8,6 +8,11 @@ Vue Observable Observables is an extension-less development tool for Vue allowin
 
 No browser extension is required for this development tool.
 
+# Sample
+
+<img src="https://raw.githubusercontent.com/TimonFeldmann/vue-observable-observables/master/readme-assets/Sample.gif" width="1056" height="594"/>
+
+
 # Install
 
 1. `npm install vue-observable-observables`
@@ -61,7 +66,4 @@ TypeScript typings are provided for this parameter modification to Vue.observabl
 1. More testing across different projects
 2. It is already possible to add new objects / arrays to properties. It should also be possible to redefine existing arrays / objects.
 3. Add an animation to node collapses / expands - **EXTREMELY** important
-   1. Removed because animations seem to break on hot-reload, have not identified the cause.
-# Sample
-
-<img src="https://raw.githubusercontent.com/TimonFeldmann/vue-observable-observables/master/readme-assets/Sample.gif" width="800" height="400"/>
+   1. Removed from release because animations seem to break on hot-reload. I have not identified the cause.
