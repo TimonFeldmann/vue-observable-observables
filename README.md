@@ -32,6 +32,8 @@ To open the dev tool:
 
 This tool adds a second **optional** parameter to the Vue.observable() method which identifies the observable object in the development tool. No modifications are required to your existing Vue.observable() calls; however if you would like to identify your observables easily in the dev tool, provide a name as the second parameter to Vue.observable().
 
+TypeScript typings are provided for this parameter modification to Vue.observable().
+
 # FAQ
 
 - Why create a popup development tool instead of creating a browser extension, isn't that insane?
