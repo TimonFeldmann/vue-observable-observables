@@ -34,8 +34,8 @@ You may have to allow popups in order for this tool to function.
 To open the dev tool:
 
 1. Type "observe" anywhere in your application.
-2. Execute `console.observeObservables()` in console.
-3. Select your observable on the left of the popup and observe / modify the corresponding properties on the right.
+   1. Alternatively execute `console.observeObservables()` in console.
+2. Select your observable on the left of the popup and observe / modify the corresponding properties on the right.
 
 This tool adds a second **optional** parameter to the Vue.observable() method which identifies the observable object in the development tool. No modifications are required to your existing Vue.observable() calls; however if you would like to identify your observables easily in the dev tool, provide a name as the second parameter to Vue.observable().
 
